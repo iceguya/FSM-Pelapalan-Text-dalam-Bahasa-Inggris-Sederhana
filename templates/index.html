@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Speller</title>
+  <style>
+    body { font-family: Arial; margin: 50px; }
+    input, button { padding: 10px; font-size: 16px; }
+    .box { margin-top: 20px; }
+    .audio { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>🔠 English Word Speller</h1>
+  <form method="POST">
+    <input type="text" name="word" placeholder="Masukkan kata Inggris" required>
+    <button type="submit">Eja & Ucapkan</button>
+  </form>
+
+  {% if result %}
+  <div class="box">
+    <h2>📌 Kata: {{ result.word }}</h2>
+    <p><strong>🔡 Ejaan:</strong> {{ result.spelling | join(" - ") }}</p>
+    <p><strong>🔈 Pelafalan (IPA):</strong> {{ result.ipa }}</p>
+    <p><strong>📚 Arti:</strong> {{ result.meaning }}</p>
+
+    <div class="audio">
+      <audio controls>
+        <source src="{{ url_for('serve_audio', filename=result.audio) }}" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio>
+    </div>
+  </div>
+  {% endif %}
+</body>
+</html>
